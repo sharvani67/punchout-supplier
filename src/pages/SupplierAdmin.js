@@ -24,11 +24,11 @@ const SupplierAdmin = () => {
   };
 
   // ✅ Fetch session details
-  const fetchSessionDetails = async (sessionId) => {
+  const fetchSessionDetails = async (session) => {
     setLoading(true);
-    setSelectedSession(sessionId);
+    setSelectedSession(session);
 
-    const res = await fetch(`${BASEURL}/api/admin/session/${sessionId}`);
+    const res = await fetch(`${BASEURL}/api/admin/session/${session.id}`);
     const data = await res.json();
 
     setDetails(data);
@@ -55,14 +55,17 @@ const SupplierAdmin = () => {
                   key={session.id}
                   action
                   active={selectedSession === session.id}
-                  onClick={() => fetchSessionDetails(session.id)}
+                  onClick={() => fetchSessionDetails(session)}
                 >
                   <div>
                     <strong>Session:</strong> {session.id.slice(0, 8)}...
                   </div>
                   <small>Buyer: {session.buyer_id}</small>
                   <br />
+                  <small>Buyer Email: {session.buyer_email}</small>
+                  <br />
                   <small>Status: {session.status}</small>
+                  
                 </ListGroup.Item>
               ))}
             </ListGroup>
@@ -84,7 +87,8 @@ const SupplierAdmin = () => {
                 </Card.Header>
                 <Card.Body>
                   <p>
-                    <strong>Session ID:</strong> {selectedSession}
+                    <strong>Session ID:</strong> {selectedSession.id}<br/>
+                    <strong>Buyer Email ID:</strong> {selectedSession.buyer_email}
                   </p>
                 </Card.Body>
               </Card>
